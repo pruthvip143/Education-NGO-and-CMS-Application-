@@ -60,7 +60,8 @@
         }
         .carousel-item img {
             object-fit: cover;
-            filter: grayscale(100%) brightness(45%);
+            /* FIXED: Adjusted grayscale and brightness to let your background images show clearly */
+            filter: grayscale(20%) brightness(65%);
             height: 100%;
             width: 100%;
         }
@@ -68,6 +69,8 @@
             bottom: 25%;
             text-align: left;
             max-width: 650px;
+            /* Added a subtle text shadow to keep text readable against the visible images */
+            text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.8);
         }
         .carousel-caption h1 {
             font-size: 3.5rem;
