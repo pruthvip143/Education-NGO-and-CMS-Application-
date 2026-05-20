@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduPulse - Education CMS Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .auth-card {
+            width: 400px;
+            border-radius: 12px;
+            border: none;
+        }
+        .metric-card {
+            border: none;
+            border-radius: 10px;
+            transition: transform 0.2s;
+        }
+        .metric-card:hover {
+            transform: translateY(-3px);
+        }
+        .table-card {
+            border-radius: 10px;
+            overflow: hidden;
+            border: none;
+        }
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loginScreen" class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="card shadow-lg p-4 auth-card bg-white">
+            <div class="text-center mb-4">
+                <h2 class="text-primary fw-bold">EduPulse</h2>
+                <p class="text-muted small">Education Content Management System</p>
+            </div>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Email Address</label>
+                    <input type="email" id="loginEmail" class="form-control" placeholder="name@domain.com" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Password</label>
+                    <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Account Role</label>
+                    <select id="loginRole" class="form-select">
+                        <option value="Admin">System Administrator</option>
+                        <option value="Coordinator">Education Project Coordinator</option>
+                        <option value="Volunteer">Public Volunteer</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 mb-3">Login to Dashboard</button>
+            </form>
+            <div class="text-center">
+                <span class="text-muted small">New to EduPulse? </span>
+                <button class="btn btn-link btn-sm p-0 mb-1" onclick="showScreen('registerScreen')">Register Account</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="registerScreen" class="container d-flex justify-content-center align-items-center min-vh-100 hidden">
+        <div class="card shadow-lg p-4 auth-card bg-white">
+            <div class="text-center mb-4">
+                <h2 class="text-primary fw-bold">Create Account</h2>
+                <p class="text-muted small">Join the EduPulse CMS Network</p>
+            </div>
+            <form id="registerForm" onsubmit="handleRegister(event)">
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Full Name</label>
+                    <input type="text" class="form-control" placeholder="John Doe" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Email Address</label>
+                    <input type="email" class="form-control" placeholder="name@domain.com" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label small fw-bold">Secure Password</label>
+                    <input type="password" class="form-control" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn btn-success w-100 mb-3">Register</button>
+            </form>
+            <div class="text-center">
+                <span class="text-muted small">Already registered? </span>
+                <button class="btn btn-link btn-sm p-0 mb-1" onclick="showScreen('loginScreen')">Sign In</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="dashboardScreen" class="container-fluid min-vh-100 bg-light p-0 hidden">
+        <nav class="navbar navbar-dark bg-primary px-4 shadow-sm mb-4">
+            <span class="navbar-brand mb-0 h1 fw-bold">📚 EduPulse Workspace</span>
+            <div class="d-flex align-items-center gap-3">
+                <span class="text-white small">Welcome back, <strong id="userDisplayEmail">user@ngo.org</strong> (<span id="userDisplayRole">Admin</span>)</span>
+                <button class="btn btn-outline-light btn-sm" onclick="handleLogout()">Logout</button>
+            </div>
+        </nav>
+
+        <div class="container">
+            <div class="row g-3 text-center mb-4">
+                <div class="col-md-3">
+                    <div class="card border-0 shadow-sm p-3 bg-white metric-card">
+                        <h4 class="text-primary mb-1 fw-bold" id="countPrograms">3</h4>
+                        <small class="text-muted fw-bold text-uppercase" style="font-size: 0.75rem;">Active Programs</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card border-0 shadow-sm p-3 bg-white metric-card">
+                        <h4 class="text-success mb-1 fw-bold">$15,500</h4>
+                        <small class="text-muted fw-bold text-uppercase" style="font-size: 0.75rem;">Total Funds Raised</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card border-0 shadow-sm p-3 bg-white metric-card">
+                        <h4 class="text-warning mb-1 fw-bold">45</h4>
+                        <small class="text-muted fw-bold text-uppercase" style="font-size: 0.75rem;">On-Duty Tutors</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card border-0 shadow-sm p-3 bg-white metric-card">
+                        <h4 class="text-info mb-1 fw-bold">870</h4>
+                        <small class="text-muted fw-bold text-uppercase" style="font-size: 0.75rem;">Students Benefited</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="fw-bold text-secondary m-0">Manage Educational Programs</h4>
+                <button id="toggleFormBtn" class="btn btn-primary btn-sm px-3 shadow-sm" onclick="toggleCampaignForm()">+ New Education Camp</button>
+            </div>
+
+            <div id="campaignFormContainer" class="card shadow-sm p-4 border-0 mb-4 bg-white hidden">
+                <h5 class="mb-3 text-primary fw-bold">Deploy New Educational Campaign</h5>
+                <form id="newCampaignForm" onsubmit="handleCreateCampaign(event)" class="row g-3">
+                    <div class="col-md-4">
+                        <label class="form-label small fw-bold">Program / Campaign Name</label>
+                        <input type="text" id="campName" class="form-control form-control-sm" placeholder="e.g., Rural Digital Literacy Drive" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label small fw-bold">Target Focus</label>
+                        <input type="text" id="campFocus" class="form-control form-control-sm" placeholder="e.g., Computer Skills" required>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label small fw-bold">Target Scope</label>
+                        <input type="text" id="campTarget" class="form-control form-control-sm" placeholder="e.g., 250 Students" required>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label small fw-bold">Allocated Budget</label>
+                        <input type="text" id="campBudget" class="form-control form-control-sm" placeholder="e.g., $4,500" required>
+                    </div>
+                    <div class="col-md-1 d-flex align-items-end">
+                        <button type="submit" class="btn btn-success btn-sm w-100 shadow-sm">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card shadow-sm table-card bg-white mb-5">
+                <table class="table table-hover align-middle mb-0" id="campaignsTable">
+                    <thead class="table-primary">
+                        <tr>
+                            <th class="px-4 py-3">Campaign Name</th>
+                            <th class="py-3">Target Focus</th>
+                            <th class="py-3">Target Group</th>
+                            <th class="py-3">Funding Target</th>
+                            <th class="py-3 px-4 text-end">Operation Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <tr>
+                            <td class="px-4 fw-bold text-dark">Rural Digital Literacy Drive</td>
+                            <td><span class="badge bg-light text-secondary border">Computer Education</span></td>
+                            <td class="text-muted small">250 Students</td>
+                            <td class="fw-bold text-success">$4,500</td>
+                            <td class="px-4 text-end"><span class="badge px-3 py-1 rounded-pill bg-success-subtle text-success">Active</span></td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 fw-bold text-dark">Primary School Kit Distribution</td>
+                            <td><span class="badge bg-light text-secondary border">Basic Materials</span></td>
+                            <td class="text-muted small">500 Students</td>
+                            <td class="fw-bold text-success">$3,200</td>
+                            <td class="px-4 text-end"><span class="badge px-3 py-1 rounded-pill bg-secondary-subtle text-secondary">Completed</span></td>
+                        </tr>
+                        <tr>
+                            <td class="px-4 fw-bold text-dark">Girls' Higher Education Scholarship</td>
+                            <td><span class="badge bg-light text-secondary border">Tuition Assistance</span></td>
+                            <td class="text-muted small">120 Students</td>
+                            <td class="fw-bold text-success">$7,800</td>
+                            <td class="px-4 text-end"><span class="badge px-3 py-1 rounded-pill bg-success-subtle text-success">Active</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Centralized View Transition Function 
+        function showScreen(screenId) {
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('registerScreen').classList.add('hidden');
+            document.getElementById('dashboardScreen').classList.add('hidden');
+            
+            document.getElementById(screenId).classList.remove('hidden');
+        }
+
+        // Authentication Event Submission Handler
+        function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const role = document.getElementById('loginRole').value;
+
+            // Log parameters straight to system dashboard views
+            document.getElementById('userDisplayEmail').innerText = email;
+            document.getElementById('userDisplayRole').innerText = role;
+
+            showScreen('dashboardScreen');
+        }
+
+        function handleRegister(event) {
+            event.preventDefault();
+            alert("Registration Account Captured Successfully! Moving to sign-in frame.");
+            showScreen('loginScreen');
+            document.getElementById('registerForm').reset();
+        }
+
+        function handleLogout() {
+            document.getElementById('loginForm').reset();
+            showScreen('loginScreen');
+        }
+
+        // Dashboard Interactive Modular Form Controllers
+        function toggleCampaignForm() {
+            const container = document.getElementById('campaignFormContainer');
+            const btn = document.getElementById('toggleFormBtn');
+            
+            if (container.classList.contains('hidden')) {
+                container.classList.remove('hidden');
+                btn.innerText = 'Close Window';
+                btn.classList.replace('btn-primary', 'btn-secondary');
+            } else {
+                container.classList.add('hidden');
+                btn.innerText = '+ New Education Camp';
+                btn.classList.replace('btn-secondary', 'btn-primary');
+            }
+        }
+
+        function handleCreateCampaign(event) {
+            event.preventDefault();
+            
+            // Collect Form Inputs
+            const name = document.getElementById('campName').value;
+            const focus = document.getElementById('campFocus').value;
+            const target = document.getElementById('campTarget').value;
+            const budget = document.getElementById('campBudget').value;
+
+            // Generate Table HTML Layout String Structure
+            const tbody = document.getElementById('tableBody');
+            const newRowHtml = `
+                <tr>
+                    <td class="px-4 fw-bold text-dark">${name}</td>
+                    <td><span class="badge bg-light text-secondary border">${focus}</span></td>
+                    <td class="text-muted small">${target}</td>
+                    <td class="fw-bold text-success">${budget}</td>
+                    <td class="px-4 text-end"><span class="badge px-3 py-1 rounded-pill bg-success-subtle text-success">Active</span></td>
+                </tr>
+            `;
+
+            // Insert newly generated campaign block directly onto the UI row array matrix
+            tbody.innerHTML += newRowHtml;
+
+            // Dynamically recalculate operational parameters counters logic
+            const currentCountEl = document.getElementById('countPrograms');
+            currentCountEl.innerText = parseInt(currentCountEl.innerText) + 1;
+
+            // Clear operational module metrics forms and collapse component visibility
+            document.getElementById('newCampaignForm').reset();
+            toggleCampaignForm();
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
