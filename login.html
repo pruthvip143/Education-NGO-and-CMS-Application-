@@ -32,13 +32,24 @@
         .hidden {
             display: none !important;
         }
+        /* Style for navigation anchors linking back to index.html */
+        .back-home-link {
+            text-decoration: none;
+            color: #666666;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+        .back-home-link:hover {
+            color: #111111;
+        }
     </style>
 </head>
 <body>
 
     <div id="loginScreen" class="container d-flex flex-column justify-content-center align-items-center min-vh-100">
         <div class="mb-3">
-            <a href="index.html" class="text-decoration-none text-secondary small fw-bold"><i class="fa-solid fa-arrow-left me-2"></i>Back to Home Page</a>
+            <a href="index.html" class="back-home-link"><i class="fa-solid fa-arrow-left-long me-2"></i>Back to Home Page</a>
         </div>
         <div class="card shadow-lg p-4 auth-card bg-white">
             <div class="text-center mb-4">
@@ -73,7 +84,7 @@
 
     <div id="registerScreen" class="container d-flex flex-column justify-content-center align-items-center min-vh-100 hidden">
         <div class="mb-3">
-            <a href="index.html" class="text-decoration-none text-secondary small fw-bold"><i class="fa-solid fa-arrow-left me-2"></i>Back to Home Page</a>
+            <a href="index.html" class="back-home-link"><i class="fa-solid fa-arrow-left-long me-2"></i>Back to Home Page</a>
         </div>
         <div class="card shadow-lg p-4 auth-card bg-white">
             <div class="text-center mb-4">
@@ -107,7 +118,7 @@
             <span class="navbar-brand mb-0 h1 fw-bold">📚 EduPulse Workspace</span>
             <div class="d-flex align-items-center gap-3">
                 <span class="text-white small">Welcome back, <strong id="userDisplayEmail">user@ngo.org</strong> (<span id="userDisplayRole">Admin</span>)</span>
-                <a href="index.html" class="btn btn-outline-light btn-sm"><i class="fa-solid fa-power-off me-1"></i> Exit Portal</a>
+                <button class="btn btn-outline-light btn-sm" onclick="handleLogout()"><i class="fa-solid fa-power-off me-1"></i> Exit Portal</button>
             </div>
         </nav>
 
@@ -209,6 +220,7 @@
     </div>
 
     <script>
+        // Centralized View Transition Function 
         function showScreen(screenId) {
             document.getElementById('loginScreen').classList.add('hidden');
             document.getElementById('registerScreen').classList.add('hidden');
@@ -217,11 +229,13 @@
             document.getElementById(screenId).classList.remove('hidden');
         }
 
+        // Authentication Event Submission Handler
         function handleLogin(event) {
             event.preventDefault();
             const email = document.getElementById('loginEmail').value;
             const role = document.getElementById('loginRole').value;
 
+            // Log parameters straight to system dashboard views
             document.getElementById('userDisplayEmail').innerText = email;
             document.getElementById('userDisplayRole').innerText = role;
 
@@ -235,6 +249,13 @@
             document.getElementById('registerForm').reset();
         }
 
+        // MODIFIED: Resets active forms and routes the user directly back to index.html informational landing view
+        function handleLogout() {
+            document.getElementById('loginForm').reset();
+            window.location.href = "index.html";
+        }
+
+        // Dashboard Interactive Modular Form Controllers
         function toggleCampaignForm() {
             const container = document.getElementById('campaignFormContainer');
             const btn = document.getElementById('toggleFormBtn');
@@ -253,11 +274,13 @@
         function handleCreateCampaign(event) {
             event.preventDefault();
             
+            // Collect Form Inputs
             const name = document.getElementById('campName').value;
             const focus = document.getElementById('campFocus').value;
             const target = document.getElementById('campTarget').value;
             const budget = document.getElementById('campBudget').value;
 
+            // Generate Table HTML Layout String Structure
             const tbody = document.getElementById('tableBody');
             const newRowHtml = `
                 <tr>
@@ -269,11 +292,14 @@
                 </tr>
             `;
 
+            // Insert newly generated campaign block directly onto the UI row array matrix
             tbody.innerHTML += newRowHtml;
 
+            // Dynamically recalculate operational parameters counters logic
             const currentCountEl = document.getElementById('countPrograms');
             currentCountEl.innerText = parseInt(currentCountEl.innerText) + 1;
 
+            // Clear operational module metrics forms and collapse component visibility
             document.getElementById('newCampaignForm').reset();
             toggleCampaignForm();
         }
