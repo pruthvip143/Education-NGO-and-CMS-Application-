@@ -7,41 +7,78 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        body {
-            background-color: #f8f9fa;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        :root {
+            --primary-dark: #111111;
+            --primary-light: #ffffff;
+            --gray-border: #e0e0e0;
+            --gray-bg: #f8f9fa;
+            --text-muted: #666666;
         }
+
+        body {
+            background-color: var(--gray-bg);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--primary-dark);
+        }
+        
         .auth-card {
             width: 400px;
-            border-radius: 12px;
-            border: none;
+            border-radius: 0px;
+            border: 1px solid var(--gray-border);
         }
+        
+        .btn-theme-dark {
+            background-color: var(--primary-dark);
+            color: var(--primary-light);
+            border-radius: 0;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+        .btn-theme-dark:hover {
+            background-color: #333333;
+            color: var(--primary-light);
+        }
+
+        .form-control, .form-select {
+            border-radius: 0;
+            border: 1px solid var(--gray-border);
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-dark);
+            box-shadow: none;
+        }
+
         .metric-card {
-            border: none;
-            border-radius: 10px;
+            border: 1px solid var(--gray-border);
+            border-radius: 0;
             transition: transform 0.2s;
         }
         .metric-card:hover {
             transform: translateY(-3px);
         }
         .table-card {
-            border-radius: 10px;
+            border-radius: 0;
             overflow: hidden;
-            border: none;
+            border: 1px solid var(--gray-border);
         }
         .hidden {
             display: none !important;
         }
-        /* Style for navigation anchors linking back to index.html */
+        
         .back-home-link {
             text-decoration: none;
-            color: #666666;
+            color: var(--text-muted);
             font-size: 0.85rem;
             font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             transition: color 0.2s ease;
         }
         .back-home-link:hover {
-            color: #111111;
+            color: var(--primary-dark);
         }
     </style>
 </head>
@@ -51,33 +88,33 @@
         <div class="mb-3">
             <a href="index.html" class="back-home-link"><i class="fa-solid fa-arrow-left-long me-2"></i>Back to Home Page</a>
         </div>
-        <div class="card shadow-lg p-4 auth-card bg-white">
+        <div class="card shadow-sm p-4 auth-card bg-white">
             <div class="text-center mb-4">
-                <h2 class="text-primary fw-bold">EduPulse</h2>
+                <h2 class="fw-bold tracking-wider text-uppercase m-0">EduPulse</h2>
                 <p class="text-muted small">Education Content Management System</p>
             </div>
             <form id="loginForm" onsubmit="handleLogin(event)">
                 <div class="mb-3">
-                    <label class="form-label small fw-bold">Email Address</label>
+                    <label class="form-label small fw-bold text-uppercase">Email Address</label>
                     <input type="email" id="loginEmail" class="form-control" placeholder="name@domain.com" required>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label small fw-bold">Password</label>
+                    <label class="form-label small fw-bold text-uppercase">Password</label>
                     <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" required>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label small fw-bold">Account Role</label>
+                    <label class="form-label small fw-bold text-uppercase">Account Role</label>
                     <select id="loginRole" class="form-select">
                         <option value="Admin">System Administrator</option>
                         <option value="Coordinator">Education Project Coordinator</option>
                         <option value="Volunteer">Public Volunteer</option>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary w-100 mb-3">Login to Dashboard</button>
+                <button type="submit" class="btn btn-theme-dark w-100 mb-3 py-2">Login to Dashboard</button>
             </form>
             <div class="text-center">
                 <span class="text-muted small">New to EduPulse? </span>
-                <button class="btn btn-link btn-sm p-0 mb-1" onclick="showScreen('registerScreen')">Register Account</button>
+                <button class="btn btn-link text-dark btn-sm p-0 mb-1 fw-bold text-decoration-none" onclick="showScreen('registerScreen')">Register Account</button>
             </div>
         </div>
     </div>
@@ -86,39 +123,39 @@
         <div class="mb-3">
             <a href="index.html" class="back-home-link"><i class="fa-solid fa-arrow-left-long me-2"></i>Back to Home Page</a>
         </div>
-        <div class="card shadow-lg p-4 auth-card bg-white">
+        <div class="card shadow-sm p-4 auth-card bg-white">
             <div class="text-center mb-4">
-                <h2 class="text-primary fw-bold">Create Account</h2>
+                <h2 class="fw-bold tracking-wider text-uppercase m-0">Create Account</h2>
                 <p class="text-muted small">Join the EduPulse CMS Network</p>
             </div>
             <form id="registerForm" onsubmit="handleRegister(event)">
                 <div class="mb-3">
-                    <label class="form-label small fw-bold">Full Name</label>
+                    <label class="form-label small fw-bold text-uppercase">Full Name</label>
                     <input type="text" class="form-control" placeholder="John Doe" required>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label small fw-bold">Email Address</label>
+                    <label class="form-label small fw-bold text-uppercase">Email Address</label>
                     <input type="email" class="form-control" placeholder="name@domain.com" required>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label small fw-bold">Secure Password</label>
+                    <label class="form-label small fw-bold text-uppercase">Secure Password</label>
                     <input type="password" class="form-control" placeholder="••••••••" required>
                 </div>
-                <button type="submit" class="btn btn-success w-100 mb-3">Register</button>
+                <button type="submit" class="btn btn-theme-dark w-100 mb-3 py-2">Register</button>
             </form>
             <div class="text-center">
                 <span class="text-muted small">Already registered? </span>
-                <button class="btn btn-link btn-sm p-0 mb-1" onclick="showScreen('loginScreen')">Sign In</button>
+                <button class="btn btn-link text-dark btn-sm p-0 mb-1 fw-bold text-decoration-none" onclick="showScreen('loginScreen')">Sign In</button>
             </div>
         </div>
     </div>
 
     <div id="dashboardScreen" class="container-fluid min-vh-100 bg-light p-0 hidden">
-        <nav class="navbar navbar-dark bg-primary px-4 shadow-sm mb-4">
+        <nav class="navbar navbar-dark bg-dark px-4 shadow-sm mb-4">
             <span class="navbar-brand mb-0 h1 fw-bold">📚 EduPulse Workspace</span>
             <div class="d-flex align-items-center gap-3">
                 <span class="text-white small">Welcome back, <strong id="userDisplayEmail">user@ngo.org</strong> (<span id="userDisplayRole">Admin</span>)</span>
-                <button class="btn btn-outline-light btn-sm" onclick="handleLogout()"><i class="fa-solid fa-power-off me-1"></i> Exit Portal</button>
+                <button class="btn btn-outline-light btn-sm rounded-0" onclick="handleLogout()"><i class="fa-solid fa-power-off me-1"></i> Exit Portal</button>
             </div>
         </nav>
 
@@ -126,25 +163,25 @@
             <div class="row g-3 text-center mb-4">
                 <div class="col-md-3">
                     <div class="card border-0 shadow-sm p-3 bg-white metric-card">
-                        <h4 class="text-primary mb-1 fw-bold" id="countPrograms">3</h4>
+                        <h4 class="text-dark mb-1 fw-bold" id="countPrograms">3</h4>
                         <small class="text-muted fw-bold text-uppercase" style="font-size: 0.75rem;">Active Programs</small>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="card border-0 shadow-sm p-3 bg-white metric-card">
-                        <h4 class="text-success mb-1 fw-bold">$15,500</h4>
+                        <h4 class="text-dark mb-1 fw-bold">$15,500</h4>
                         <small class="text-muted fw-bold text-uppercase" style="font-size: 0.75rem;">Total Funds Raised</small>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="card border-0 shadow-sm p-3 bg-white metric-card">
-                        <h4 class="text-warning mb-1 fw-bold">45</h4>
+                        <h4 class="text-dark mb-1 fw-bold">45</h4>
                         <small class="text-muted fw-bold text-uppercase" style="font-size: 0.75rem;">On-Duty Tutors</small>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="card border-0 shadow-sm p-3 bg-white metric-card">
-                        <h4 class="text-info mb-1 fw-bold">870</h4>
+                        <h4 class="text-dark mb-1 fw-bold">870</h4>
                         <small class="text-muted fw-bold text-uppercase" style="font-size: 0.75rem;">Students Benefited</small>
                     </div>
                 </div>
@@ -152,11 +189,11 @@
 
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h4 class="fw-bold text-secondary m-0">Manage Educational Programs</h4>
-                <button id="toggleFormBtn" class="btn btn-primary btn-sm px-3 shadow-sm" onclick="toggleCampaignForm()">+ New Education Camp</button>
+                <button id="toggleFormBtn" class="btn btn-dark btn-sm px-3 shadow-sm rounded-0" onclick="toggleCampaignForm()">+ New Education Camp</button>
             </div>
 
-            <div id="campaignFormContainer" class="card shadow-sm p-4 border-0 mb-4 bg-white hidden">
-                <h5 class="mb-3 text-primary fw-bold">Deploy New Educational Campaign</h5>
+            <div id="campaignFormContainer" class="card shadow-sm p-4 border-0 mb-4 bg-white rounded-0 hidden">
+                <h5 class="mb-3 text-dark fw-bold text-uppercase tracking-wider">Deploy New Educational Campaign</h5>
                 <form id="newCampaignForm" onsubmit="handleCreateCampaign(event)" class="row g-3">
                     <div class="col-md-4">
                         <label class="form-label small fw-bold">Program / Campaign Name</label>
@@ -175,14 +212,14 @@
                         <input type="text" id="campBudget" class="form-control form-control-sm" placeholder="e.g., $4,500" required>
                     </div>
                     <div class="col-md-1 d-flex align-items-end">
-                        <button type="submit" class="btn btn-success btn-sm w-100 shadow-sm">Submit</button>
+                        <button type="submit" class="btn btn-dark btn-sm w-100 shadow-sm rounded-0">Submit</button>
                     </div>
                 </form>
             </div>
 
             <div class="card shadow-sm table-card bg-white mb-5">
                 <table class="table table-hover align-middle mb-0" id="campaignsTable">
-                    <thead class="table-primary">
+                    <thead class="table-dark">
                         <tr>
                             <th class="px-4 py-3">Campaign Name</th>
                             <th class="py-3">Target Focus</th>
@@ -196,22 +233,22 @@
                             <td class="px-4 fw-bold text-dark">Rural Digital Literacy Drive</td>
                             <td><span class="badge bg-light text-secondary border">Computer Education</span></td>
                             <td class="text-muted small">250 Students</td>
-                            <td class="fw-bold text-success">$4,500</td>
-                            <td class="px-4 text-end"><span class="badge px-3 py-1 rounded-pill bg-success-subtle text-success">Active</span></td>
+                            <td class="fw-bold text-dark">$4,500</td>
+                            <td class="px-4 text-end"><span class="badge px-3 py-1 rounded-pill bg-dark text-white">Active</span></td>
                         </tr>
                         <tr>
                             <td class="px-4 fw-bold text-dark">Primary School Kit Distribution</td>
                             <td><span class="badge bg-light text-secondary border">Basic Materials</span></td>
                             <td class="text-muted small">500 Students</td>
-                            <td class="fw-bold text-success">$3,200</td>
-                            <td class="px-4 text-end"><span class="badge px-3 py-1 rounded-pill bg-secondary-subtle text-secondary">Completed</span></td>
+                            <td class="fw-bold text-dark">$3,200</td>
+                            <td class="px-4 text-end"><span class="badge px-3 py-1 rounded-pill bg-secondary text-white">Completed</span></td>
                         </tr>
                         <tr>
                             <td class="px-4 fw-bold text-dark">Girls' Higher Education Scholarship</td>
                             <td><span class="badge bg-light text-secondary border">Tuition Assistance</span></td>
                             <td class="text-muted small">120 Students</td>
-                            <td class="fw-bold text-success">$7,800</td>
-                            <td class="px-4 text-end"><span class="badge px-3 py-1 rounded-pill bg-success-subtle text-success">Active</span></td>
+                            <td class="fw-bold text-dark">$7,800</td>
+                            <td class="px-4 text-end"><span class="badge px-3 py-1 rounded-pill bg-dark text-white">Active</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -220,7 +257,6 @@
     </div>
 
     <script>
-        // Centralized View Transition Function 
         function showScreen(screenId) {
             document.getElementById('loginScreen').classList.add('hidden');
             document.getElementById('registerScreen').classList.add('hidden');
@@ -229,13 +265,11 @@
             document.getElementById(screenId).classList.remove('hidden');
         }
 
-        // Authentication Event Submission Handler
         function handleLogin(event) {
             event.preventDefault();
             const email = document.getElementById('loginEmail').value;
             const role = document.getElementById('loginRole').value;
 
-            // Log parameters straight to system dashboard views
             document.getElementById('userDisplayEmail').innerText = email;
             document.getElementById('userDisplayRole').innerText = role;
 
@@ -249,13 +283,12 @@
             document.getElementById('registerForm').reset();
         }
 
-        // MODIFIED: Resets active forms and routes the user directly back to index.html informational landing view
+        // Script handles navigation directly shifting browser context back to index.html
         function handleLogout() {
             document.getElementById('loginForm').reset();
             window.location.href = "index.html";
         }
 
-        // Dashboard Interactive Modular Form Controllers
         function toggleCampaignForm() {
             const container = document.getElementById('campaignFormContainer');
             const btn = document.getElementById('toggleFormBtn');
@@ -263,43 +296,38 @@
             if (container.classList.contains('hidden')) {
                 container.classList.remove('hidden');
                 btn.innerText = 'Close Window';
-                btn.classList.replace('btn-primary', 'btn-secondary');
+                btn.classList.replace('btn-dark', 'btn-secondary');
             } else {
                 container.classList.add('hidden');
                 btn.innerText = '+ New Education Camp';
-                btn.classList.replace('btn-secondary', 'btn-primary');
+                btn.classList.replace('btn-secondary', 'btn-dark');
             }
         }
 
         function handleCreateCampaign(event) {
             event.preventDefault();
             
-            // Collect Form Inputs
             const name = document.getElementById('campName').value;
             const focus = document.getElementById('campFocus').value;
             const target = document.getElementById('campTarget').value;
             const budget = document.getElementById('campBudget').value;
 
-            // Generate Table HTML Layout String Structure
             const tbody = document.getElementById('tableBody');
             const newRowHtml = `
                 <tr>
                     <td class="px-4 fw-bold text-dark">${name}</td>
                     <td><span class="badge bg-light text-secondary border">${focus}</span></td>
                     <td class="text-muted small">${target}</td>
-                    <td class="fw-bold text-success">${budget}</td>
-                    <td class="px-4 text-end"><span class="badge px-3 py-1 rounded-pill bg-success-subtle text-success">Active</span></td>
+                    <td class="fw-bold text-dark">${budget}</td>
+                    <td class="px-4 text-end"><span class="badge px-3 py-1 rounded-pill bg-dark text-white">Active</span></td>
                 </tr>
             `;
 
-            // Insert newly generated campaign block directly onto the UI row array matrix
             tbody.innerHTML += newRowHtml;
 
-            // Dynamically recalculate operational parameters counters logic
             const currentCountEl = document.getElementById('countPrograms');
             currentCountEl.innerText = parseInt(currentCountEl.innerText) + 1;
 
-            // Clear operational module metrics forms and collapse component visibility
             document.getElementById('newCampaignForm').reset();
             toggleCampaignForm();
         }
