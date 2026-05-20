@@ -52,7 +52,7 @@
             color: var(--primary-light);
         }
 
-        /* Hero Carousel Section - Styled for text-only layout */
+        /* Hero Carousel Section - Text-only premium dark layout */
         .carousel-item {
             height: 65vh;
             min-height: 380px;
@@ -125,7 +125,7 @@
             margin-bottom: 15px;
         }
 
-        /* Campaign/Initiative Cards Unified Image Layout */
+        /* CRITICAL FIXED CSS: Dynamic Image Sizing Setup for Cards */
         .initiative-card {
             border: 1px solid var(--gray-border);
             border-radius: 0;
@@ -142,7 +142,7 @@
             position: relative;
             overflow: hidden;
             height: 240px;
-            background-color: #000000;
+            background-color: #111111;
         }
         .initiative-card img {
             object-fit: cover;
@@ -150,6 +150,7 @@
             height: 100%;
             filter: grayscale(100%);
             transition: all 0.5s ease;
+            display: block;
         }
         .initiative-card:hover img {
             transform: scale(1.05);
@@ -248,7 +249,7 @@
         <button class="carousel-control-prev" type="button" data-bs-target="#heroSlider" data-bs-slide="prev">
             <span class="carousel-control-prev-icon"></span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#heroSlider" data-bs-slide="next">
+        <button class="carousel-control-next" type="button" data-bs-target="#heroSlider" data-bs-slide="prev">
             <span class="carousel-control-next-icon"></span>
         </button>
     </div>
