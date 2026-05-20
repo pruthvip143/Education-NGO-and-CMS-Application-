@@ -52,14 +52,20 @@
             color: var(--primary-light);
         }
 
-        /* Hero Carousel Section - Styled for premium text-only design */
+        /* Hero Carousel Section */
         .carousel-item {
-            height: 65vh;
-            min-height: 380px;
-            background: #111111; 
+            height: 70vh;
+            min-height: 400px;
+            background: #111111; /* Solid dark background for text clarity */
+        }
+        .carousel-item img {
+            object-fit: cover;
+            filter: grayscale(20%) brightness(65%);
+            height: 100%;
+            width: 100%;
         }
         .carousel-caption {
-            bottom: 20%;
+            bottom: 25%;
             text-align: left;
             max-width: 650px;
         }
@@ -125,7 +131,7 @@
             margin-bottom: 15px;
         }
 
-        /* Clean Card Layout with no image containers */
+        /* Campaign/Initiative Cards Layout */
         .initiative-card {
             border: 1px solid var(--gray-border);
             border-radius: 0;
@@ -136,10 +142,26 @@
         }
         .initiative-card:hover {
             box-shadow: 0 12px 25px rgba(0,0,0,0.08);
-            border-color: var(--primary-dark);
+        }
+        .initiative-img-wrapper {
+            position: relative;
+            overflow: hidden;
+            height: 240px;
+            background-color: #000;
+        }
+        .initiative-card img {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+            filter: grayscale(100%);
+            transition: all 0.5s ease;
+        }
+        .initiative-card:hover img {
+            transform: scale(1.05);
+            filter: grayscale(0%);
         }
         .card-body-custom {
-            padding: 35px 25px;
+            padding: 25px;
         }
         .initiative-tag {
             font-size: 0.75rem;
@@ -147,7 +169,7 @@
             font-weight: 600;
             letter-spacing: 1px;
             color: var(--text-muted);
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             display: inline-block;
         }
 
@@ -307,30 +329,42 @@
             <div class="row g-4">
                 <div class="col-md-4">
                     <div class="initiative-card shadow-sm">
+                        <div class="initiative-img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1542810634-71277d95dcbb?q=80&w=600" alt="Girls Education">
+                        </div>
                         <div class="card-body-custom">
                             <span class="initiative-tag">Primary Learning Focus</span>
                             <h4 class="fw-bold mb-3">Empowering Girls Education</h4>
                             <p class="text-muted small mb-4">Targeting structural literacy access parameters and building regional secondary support pipelines for young women inside rural sectors.</p>
+                            
                             <a href="login.html" class="text-dark fw-bold text-decoration-none small text-uppercase tracking-wider">Manage Initiative <i class="fa-solid fa-arrow-right-long ms-1"></i></a>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="initiative-card shadow-sm">
+                        <div class="initiative-img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=600" alt="Nutrient Commitment">
+                        </div>
                         <div class="card-body-custom">
                             <span class="initiative-tag">Health &amp; Welfare</span>
                             <h4 class="fw-bold mb-3">Committed to Child Nutrition</h4>
                             <p class="text-muted small mb-4">Providing stable daily dietary supplies to maximize basic physiological baselines, enabling children to focus safely on classroom study workloads.</p>
+                            
                             <a href="login.html" class="text-dark fw-bold text-decoration-none small text-uppercase tracking-wider">Manage Initiative <i class="fa-solid fa-arrow-right-long ms-1"></i></a>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="initiative-card shadow-sm">
+                        <div class="initiative-img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=600" alt="Elderly Care">
+                        </div>
                         <div class="card-body-custom">
                             <span class="initiative-tag">Community Integration</span>
                             <h4 class="fw-bold mb-3">Manav Kartavya Care</h4>
                             <p class="text-muted small mb-4">Filling the empty spaces of our senior generations with complete medical oversight, interactive reading modules, and standard care plans.</p>
+                            
                             <a href="login.html" class="text-dark fw-bold text-decoration-none small text-uppercase tracking-wider">Manage Initiative <i class="fa-solid fa-arrow-right-long ms-1"></i></a>
                         </div>
                     </div>
