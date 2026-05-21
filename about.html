@@ -75,7 +75,7 @@
     <main id="admin-console" class="container section-padding">
         <div class="admin-header text-center">
             <h1 class="display-6 fw-bold text-uppercase tracking-wide mb-2">About Us Content Dashboard</h1>
-            <p class="mb-0 text-uppercase small tracking-wider opacity-75">Full CRUD Engine Management Module</p>
+            <p class="mb-0 text-uppercase small tracking-wider opacity-75">LocalStorage Data Persistence Module</p>
         </div>
 
         <div class="row">
@@ -110,7 +110,7 @@
                             <input type="text" id="prog-name-input" class="form-control form-control-sm" placeholder="Program Name (e.g., Rural Digital Literacy)" required>
                         </div>
                         <div class="mb-2">
-                            <textarea id="prog-desc-input" class="form-control form-control-sm" rows="2" placeholder="Optional brief program metrics description details..."></textarea>
+                            <textarea id="prog-desc-input" class="form-control form-control-sm" rows="2" placeholder="Brief program metrics description details..."></textarea>
                         </div>
                         <button type="submit" class="btn btn-dark btn-sm text-uppercase px-3">Add Program</button>
                     </form>
@@ -125,7 +125,7 @@
                             <div class="col-6"><input type="text" id="member-role-input" class="form-control form-control-sm" placeholder="Role (e.g., Coordinator)" required></div>
                         </div>
                         <div class="mb-2">
-                            <input type="url" id="member-img-input" class="form-control form-control-sm" placeholder="Optional Portrait Image URL asset path...">
+                            <input type="url" id="member-img-input" class="form-control form-control-sm" placeholder="Portrait Image URL asset path...">
                         </div>
                         <button type="submit" class="btn btn-dark btn-sm text-uppercase px-3">Add Team Member</button>
                     </form>
@@ -156,7 +156,7 @@
             <div class="row g-4 mb-5 border-top pt-5">
                 <div class="col-lg-4">
                     <h4 class="h5 text-uppercase fw-bold tracking-wider mb-3">Key Focus Frameworks</h4>
-                    <p class="text-muted small">Real-time database configurations highlighting actively running infrastructure schemes.</p>
+                    <p class="text-muted small">Real-time local storage metrics highlighting actively running infrastructure schemes.</p>
                 </div>
                 <div id="preview-programs-col" class="col-lg-8"></div>
             </div>
@@ -170,152 +170,175 @@
 
     <footer class="bg-dark text-white text-center py-4 small">
         <div class="container">
-            <p class="mb-0 opacity-75">&copy; 2026 EduPulse Application. All rights reserved. Engineered via Decoupled Architecture.</p>
+            <p class="mb-0 opacity-75">&copy; 2026 EduPulse Application. All rights reserved. Engineered via LocalStorage System.</p>
         </div>
     </footer>
 
     <script>
-        // DEVELOPER ADVICE: Keep as localhost for testing. Swap with your hosted API Server address when running live.
-        const BACKEND_URL = 'http://localhost:5000'; 
+        // Setup initial default mock layout arrays if storage is empty
+        const defaultStory = "Welcome to EduPulse! We are a passionate team dedicated to making a structural difference in the lives of underprivileged communities through comprehensive digital literacy campaigns, child education programs, and localized teaching support frameworks.";
+        
+        const defaultValues = [{id: "v1", value: "Integrity"}, {id: "v2", value: "Inclusivity"}, {id: "v3", value: "Transparency"}];
+        
+        const defaultPrograms = [
+            {id: "p1", name: "Empowering Girls Education", description: "Targeting structural literacy access parameters and building regional secondary support pipelines for young women inside rural sectors."},
+            {id: "p2", name: "Rural Digital Literacy", description: "Deploying dedicated learning hubs and real-time support systems to facilitate structural transformations inside underprivileged areas."}
+        ];
+
+        const defaultTeam = [
+            {id: "t1", name: "Dr. Ananya Rao", role: "Program Director", image_url: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400"},
+            {id: "t2", name: "Rajesh Kumar", role: "Field Coordinator", image_url: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=400"}
+        ];
 
         document.addEventListener('DOMContentLoaded', () => {
-            fetchStateContext();
+            // Check if LocalStorage keys exist; if not, populate them with the default setups
+            if (!localStorage.getItem('ep_story')) localStorage.setItem('ep_story', defaultStory);
+            if (!localStorage.getItem('ep_values')) localStorage.setItem('ep_values', JSON.stringify(defaultValues));
+            if (!localStorage.getItem('ep_programs')) localStorage.setItem('ep_programs', JSON.stringify(defaultPrograms));
+            if (!localStorage.getItem('ep_team')) localStorage.setItem('ep_team', JSON.stringify(defaultTeam));
+
+            renderStateContext();
 
             // Intercept Story Submission
-            document.getElementById('story-form').addEventListener('submit', async (e) => {
+            document.getElementById('story-form').addEventListener('submit', (e) => {
                 e.preventDefault();
-                await syncPost(`${BACKEND_URL}/api/about/story`, { content: document.getElementById('story-input').value });
+                localStorage.setItem('ep_story', document.getElementById('story-input').value);
+                alert("Story updated successfully in permanent storage!");
+                renderStateContext();
             });
 
             // Intercept Core Value Submission
-            document.getElementById('value-form').addEventListener('submit', async (e) => {
+            document.getElementById('value-form').addEventListener('submit', (e) => {
                 e.preventDefault();
-                await syncPost(`${BACKEND_URL}/api/about/values`, { value: document.getElementById('value-input').value });
+                const currentValues = JSON.parse(localStorage.getItem('ep_values'));
+                const newValue = {
+                    id: 'val_' + Date.now(),
+                    value: document.getElementById('value-input').value
+                };
+                currentValues.push(newValue);
+                localStorage.setItem('ep_values', JSON.stringify(currentValues));
                 document.getElementById('value-input').value = "";
+                renderStateContext();
             });
 
             // Intercept Focus Program Submission
-            document.getElementById('program-form').addEventListener('submit', async (e) => {
+            document.getElementById('program-form').addEventListener('submit', (e) => {
                 e.preventDefault();
-                await syncPost(`${BACKEND_URL}/api/about/programs`, {
+                const currentPrograms = JSON.parse(localStorage.getItem('ep_programs'));
+                const newProg = {
+                    id: 'prog_' + Date.now(),
                     name: document.getElementById('prog-name-input').value,
                     description: document.getElementById('prog-desc-input').value
-                });
+                };
+                currentPrograms.push(newProg);
+                localStorage.setItem('ep_programs', JSON.stringify(currentPrograms));
                 document.getElementById('prog-name-input').value = "";
                 document.getElementById('prog-desc-input').value = "";
+                renderStateContext();
             });
 
-            // Intercept Profile Card Roster Submission
-            document.getElementById('team-form').addEventListener('submit', async (e) => {
+            // Intercept Team Member Submission
+            document.getElementById('team-form').addEventListener('submit', (e) => {
                 e.preventDefault();
-                await syncPost(`${BACKEND_URL}/api/about/team`, {
+                const currentTeam = JSON.parse(localStorage.getItem('ep_team'));
+                const newMember = {
+                    id: 'team_' + Date.now(),
                     name: document.getElementById('member-name-input').value,
                     role: document.getElementById('member-role-input').value,
                     image_url: document.getElementById('member-img-input').value
-                });
+                };
+                currentTeam.push(newMember);
+                localStorage.setItem('ep_team', JSON.stringify(currentTeam));
                 document.getElementById('member-name-input').value = "";
                 document.getElementById('member-role-input').value = "";
                 document.getElementById('member-img-input').value = "";
+                renderStateContext();
             });
         });
 
-        // Universal Network Submission Framework Handler
-        async function syncPost(targetUrl, payloadData) {
-            try {
-                const response = await fetch(targetUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payloadData)
-                });
-                if (response.ok) { fetchStateContext(); }
-            } catch (err) { console.error("Communication anomaly captured:", err); }
-        }
-
-        // Universal Element Removal Handler
-        async function deleteItem(targetUrl) {
+        // Dynamic State Element Deletion Handler
+        function removeItem(key, id) {
             if (confirm("Confirm database row record deletion parameter sequence?")) {
-                const response = await fetch(targetUrl, { method: 'DELETE' });
-                if (response.ok) { fetchStateContext(); }
+                const dataset = JSON.parse(localStorage.getItem(key));
+                const updatedDataset = dataset.filter(item => item.id !== id);
+                localStorage.setItem(key, JSON.stringify(updatedDataset));
+                renderStateContext();
             }
         }
 
-        // Asynchronous Context Pipeline Painter
-        async function fetchStateContext() {
-            try {
-                const stream = await fetch(`${BACKEND_URL}/api/about/context`);
-                const data = await stream.json();
+        // Context Engine Painter
+        function renderStateContext() {
+            // 1. Render History Story
+            const savedStory = localStorage.getItem('ep_story');
+            document.getElementById('story-input').value = savedStory;
+            document.getElementById('preview-story').innerText = savedStory;
 
-                // 1. Render History Story Modules
-                if (data.story) {
-                    document.getElementById('story-input').value = data.story.content;
-                    document.getElementById('preview-story').innerText = data.story.content;
-                }
+            // 2. Render Value Structures
+            const values = JSON.parse(localStorage.getItem('ep_values'));
+            const valAdmin = document.getElementById('values-admin-list');
+            const valView = document.getElementById('preview-values-row');
+            valAdmin.innerHTML = ""; valView.innerHTML = "";
+            
+            values.forEach(v => {
+                valAdmin.innerHTML += `
+                    <div class="entity-list-item small">
+                        <span><strong>${v.value}</strong></span>
+                        <button onclick="removeItem('ep_values', '${v.id}')" class="btn btn-outline-danger py-1 px-2"><i class="fa-solid fa-trash"></i> Delete</button>
+                    </div>`;
+                valView.innerHTML += `
+                    <div class="col-md-3">
+                        <div class="value-card">
+                            <div class="value-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                            <h5 class="fw-bold text-uppercase small m-0">${v.value}</h5>
+                        </div>
+                    </div>`;
+            });
 
-                // 2. Render Value Structures
-                const valAdmin = document.getElementById('values-admin-list');
-                const valView = document.getElementById('preview-values-row');
-                valAdmin.innerHTML = ""; valView.innerHTML = "";
-                
-                data.values.forEach(v => {
-                    valAdmin.innerHTML += `
-                        <div class="entity-list-item small">
-                            <span><strong>${v.value}</strong></span>
-                            <button onclick="deleteItem('${BACKEND_URL}/api/about/values/${v._id}')" class="btn btn-outline-danger py-1 px-2"><i class="fa-solid fa-trash"></i> Delete</button>
-                        </div>`;
-                    valView.innerHTML += `
-                        <div class="col-md-3">
-                            <div class="value-card">
-                                <div class="value-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-                                <h5 class="fw-bold text-uppercase small m-0">${v.value}</h5>
+            // 3. Render Strategic Programs
+            const programs = JSON.parse(localStorage.getItem('ep_programs'));
+            const progAdmin = document.getElementById('programs-admin-list');
+            const progView = document.getElementById('preview-programs-col');
+            progAdmin.innerHTML = ""; progView.innerHTML = "";
+
+            programs.forEach(p => {
+                progAdmin.innerHTML += `
+                    <div class="entity-list-item small">
+                        <span><strong>${p.name}</strong></span>
+                        <button onclick="removeItem('ep_programs', '${p.id}')" class="btn btn-outline-danger py-1 px-2"><i class="fa-solid fa-trash"></i> Delete</button>
+                    </div>`;
+                progView.innerHTML += `
+                    <div class="program-box">
+                        <h5 class="fw-bold text-uppercase mb-1">${p.name}</h5>
+                        <p class="text-secondary small m-0">${p.description || "No description logged for this focus area."}</p>
+                    </div>`;
+            });
+
+            // 4. Render Team Personnel Roster
+            const team = JSON.parse(localStorage.getItem('ep_team'));
+            const teamAdmin = document.getElementById('team-admin-list');
+            const teamView = document.getElementById('preview-team-row');
+            teamAdmin.innerHTML = ""; teamView.innerHTML = "";
+
+            team.forEach(t => {
+                const avatar = t.image_url || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400";
+                teamAdmin.innerHTML += `
+                    <div class="entity-list-item small">
+                        <span><strong>${t.name}</strong> (${t.role})</span>
+                        <button onclick="removeItem('ep_team', '${t.id}')" class="btn btn-outline-danger py-1 px-2"><i class="fa-solid fa-trash"></i> Delete</button>
+                    </div>`;
+                teamView.innerHTML += `
+                    <div class="col-6 col-md-3">
+                        <div class="team-card">
+                            <div class="team-img-wrapper">
+                                <img src="${avatar}" alt="Roster Matrix Portrait">
                             </div>
-                        </div>`;
-                });
-
-                // 3. Render Strategic Programs
-                const progAdmin = document.getElementById('programs-admin-list');
-                const progView = document.getElementById('preview-programs-col');
-                progAdmin.innerHTML = ""; progView.innerHTML = "";
-
-                data.programs.forEach(p => {
-                    progAdmin.innerHTML += `
-                        <div class="entity-list-item small">
-                            <span><strong>${p.name}</strong></span>
-                            <button onclick="deleteItem('${BACKEND_URL}/api/about/programs/${p._id}')" class="btn btn-outline-danger py-1 px-2"><i class="fa-solid fa-trash"></i> Delete</button>
-                        </div>`;
-                    progView.innerHTML += `
-                        <div class="program-box">
-                            <h5 class="fw-bold text-uppercase mb-1">${p.name}</h5>
-                            <p class="text-secondary small m-0">${p.description || "No description logged for this focus area."}</p>
-                        </div>`;
-                });
-
-                // 4. Render Team Personnel Roster
-                const teamAdmin = document.getElementById('team-admin-list');
-                const teamView = document.getElementById('preview-team-row');
-                teamAdmin.innerHTML = ""; teamView.innerHTML = "";
-
-                data.team.forEach(t => {
-                    const avatar = t.image_url || "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400";
-                    teamAdmin.innerHTML += `
-                        <div class="entity-list-item small">
-                            <span><strong>${t.name}</strong> (${t.role})</span>
-                            <button onclick="deleteItem('${BACKEND_URL}/api/about/team/${t._id}')" class="btn btn-outline-danger py-1 px-2"><i class="fa-solid fa-trash"></i> Delete</button>
-                        </div>`;
-                    teamView.innerHTML += `
-                        <div class="col-6 col-md-3">
-                            <div class="team-card">
-                                <div class="team-img-wrapper">
-                                    <img src="${avatar}" alt="Roster Matrix Portrait">
-                                </div>
-                                <div class="team-info">
-                                    <h6 class="fw-bold mb-0 text-uppercase small">${t.name}</h6>
-                                    <span class="text-muted d-block" style="font-size:0.75rem;">${t.role}</span>
-                                </div>
+                            <div class="team-info">
+                                <h6 class="fw-bold mb-0 text-uppercase small">${t.name}</h6>
+                                <span class="text-muted d-block" style="font-size:0.75rem;">${t.role}</span>
                             </div>
-                        </div>`;
-                });
-
-            } catch (err) { console.error("Error connecting with the API database layer infrastructure:", err); }
+                        </div>
+                    </div>`;
+            });
         }
     </script>
 </body>
