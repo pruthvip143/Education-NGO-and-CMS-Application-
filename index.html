@@ -39,36 +39,58 @@
         .nav-link:hover {
             opacity: 0.6;
         }
-        .btn-outline-dark {
-            border-radius: 0;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-        }
-        .btn-outline-dark:hover {
-            background-color: var(--primary-dark);
-            color: var(--primary-light);
-        }
 
         /* Hero Carousel Section - Text-only premium dark layout */
         .carousel-item {
             height: 65vh;
-            min-height: 380px;
+            min-height: 420px;
             background: #111111; 
         }
         .carousel-caption {
-            bottom: 20%;
+            bottom: 15%;
             text-align: left;
             max-width: 650px;
+            padding: 0 15px;
         }
         .carousel-caption h1 {
-            font-size: 3.5rem;
+            font-size: 2.5rem;
             font-weight: 800;
             letter-spacing: -1px;
             text-transform: uppercase;
             color: #ffffff;
+            line-height: 1.2;
+        }
+        .carousel-caption p {
+            font-size: 1rem;
+        }
+
+        /* Fix Text Overlaps on Mobile Carousel view screens */
+        @media (max-width: 768px) {
+            .carousel-item {
+                height: auto;
+                min-height: 480px;
+                padding-top: 40px;
+                padding-bottom: 40px;
+            }
+            .carousel-caption {
+                position: relative;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                margin-top: 20px;
+                padding: 0;
+            }
+            .carousel-caption h1 {
+                font-size: 1.8rem !important;
+            }
+            .carousel-caption .btn {
+                padding: 10px 15px !important;
+                font-size: 0.85rem;
+                margin-bottom: 10px;
+                display: block;
+                width: 100%;
+                text-align: center;
+            }
         }
 
         /* Unified Layout Sections */
@@ -125,7 +147,7 @@
             margin-bottom: 15px;
         }
 
-        /* CRITICAL FIXED CSS: Dynamic Image Sizing Setup for Cards */
+        /* Dynamic Image Sizing Setup for Cards */
         .initiative-card {
             border: 1px solid var(--gray-border);
             border-radius: 0;
@@ -198,10 +220,12 @@
 
     <nav class="navbar navbar-expand-lg navbar-light sticky-top py-3">
         <div class="container">
-            <a class="navbar-brand" href="#"><i class="fa-solid fa-layer-group me-2"></i>EDUPULSE</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <a class="navbar-brand" href="index.html"><i class="fa-solid fa-layer-group me-2"></i>EDUPULSE</a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+            
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
@@ -229,9 +253,10 @@
                     <div class="carousel-caption">
                         <h1 class="display-3">Empowering Lives, Creating Opportunities</h1>
                         <p class="lead mb-4 text-light opacity-75">Bridging socioeconomic gaps through community-driven educational networks and resource allocation pipelines.</p>
-                        
-                        <a href="login.html" class="btn btn-light rounded-0 px-4 py-3 text-uppercase fw-bold shadow-sm me-3">Access Portal</a>
-                        <a href="#initiatives" class="btn btn-outline-light rounded-0 px-4 py-3 text-uppercase fw-bold">View Initiatives</a>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a href="login.html" class="btn btn-light rounded-0 px-4 py-3 text-uppercase fw-bold shadow-sm">Access Portal</a>
+                            <a href="#initiatives" class="btn btn-outline-light rounded-0 px-4 py-3 text-uppercase fw-bold">View Initiatives</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -240,8 +265,9 @@
                     <div class="carousel-caption">
                         <h1 class="display-3">Enabling Rural Digital Literacy</h1>
                         <p class="lead mb-4 text-light opacity-75">Deploying dedicated learning hubs and real-time support systems to facilitate structural transformations inside underprivileged areas.</p>
-                        
-                        <a href="login.html" class="btn btn-light rounded-0 px-4 py-3 text-uppercase fw-bold shadow-sm">Join As Coordinator</a>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a href="login.html" class="btn btn-light rounded-0 px-4 py-3 text-uppercase fw-bold shadow-sm">Join As Coordinator</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -249,7 +275,7 @@
         <button class="carousel-control-prev" type="button" data-bs-target="#heroSlider" data-bs-slide="prev">
             <span class="carousel-control-prev-icon"></span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#heroSlider" data-bs-slide="prev">
+        <button class="carousel-control-next" type="button" data-bs-target="#heroSlider" data-bs-slide="next">
             <span class="carousel-control-next-icon"></span>
         </button>
     </div>
@@ -261,7 +287,7 @@
                     <div class="pe-md-4">
                         <h2 class="section-title">Our Mission</h2>
                         <p class="text-secondary leading-relaxed">
-                            Our mission is to build highly scalable, interactive, and seamless operational architectures that allow non-profits and community stakeholders to target learning resources, mobilize teaching cohorts, and manage educational drives effortlessly.
+                            [span_0](start_span)Our mission is to build highly scalable, interactive, and seamless operational architectures that allow non-profits and community stakeholders to target learning resources, mobilize teaching cohorts, and manage educational drives effortlessly[span_0](end_span).
                         </p>
                         <p class="text-secondary leading-relaxed">
                             We aim to dismantle historical educational limitations by implementing centralized digital frameworks that coordinate live project milestones, map structural metrics transparently, and increase overall systemic velocity.
@@ -332,7 +358,7 @@
                         <div class="card-body-custom">
                             <span class="initiative-tag">Primary Learning Focus</span>
                             <h4 class="fw-bold mb-3">Empowering Girls Education</h4>
-                            <p class="text-muted small mb-4">Targeting structural literacy access parameters and building regional secondary support pipelines for young women inside rural sectors.</p>
+                            [span_1](start_span)[span_2](start_span)<p class="text-muted small mb-4">Targeting structural literacy access parameters and building regional secondary support pipelines for young women inside rural sectors[span_1](end_span)[span_2](end_span).</p>
                             <a href="login.html" class="text-dark fw-bold text-decoration-none small text-uppercase tracking-wider">Manage Initiative <i class="fa-solid fa-arrow-right-long ms-1"></i></a>
                         </div>
                     </div>
@@ -346,7 +372,7 @@
                         <div class="card-body-custom">
                             <span class="initiative-tag">Health &amp; Welfare</span>
                             <h4 class="fw-bold mb-3">Committed to Child Nutrition</h4>
-                            <p class="text-muted small mb-4">Providing stable daily dietary supplies to maximize basic physiological baselines, enabling children to focus safely on classroom study workloads.</p>
+                            [span_3](start_span)[span_4](start_span)<p class="text-muted small mb-4">Providing stable daily dietary supplies to maximize basic physiological baselines, enabling children to focus safely on classroom study workloads[span_3](end_span)[span_4](end_span).</p>
                             <a href="login.html" class="text-dark fw-bold text-decoration-none small text-uppercase tracking-wider">Manage Initiative <i class="fa-solid fa-arrow-right-long ms-1"></i></a>
                         </div>
                     </div>
@@ -376,14 +402,14 @@
                 <div class="col-md-4">
                     <h5 class="footer-heading"><i class="fa-solid fa-layer-group me-2"></i>EduPulse</h5>
                     <p class="text-muted small pe-md-4">
-                        A mobile-responsive, single-page educational control system built explicitly to coordinate learning campaigns, monitor volunteer tracking matrices, and secure regional operations.
+                        [span_5](start_span)[span_6](start_span)A mobile-responsive, single-page educational control system built explicitly to coordinate learning campaigns, monitor volunteer tracking matrices, and secure regional operations[span_5](end_span)[span_6](end_span).
                     </p>
                 </div>
                 <div class="col-md-2">
                     <h5 class="footer-heading">Quick Links</h5>
                     <ul class="list-unstyled small">
                         <li class="mb-2"><a href="#">Home</a></li>
-                        <li class="mb-2"><a href="#vision-mission">About Us</a></li>
+                        <li class="mb-2"><a href="about.html">About Us</a></li>
                         <li class="mb-2"><a href="#initiatives">Our Work</a></li>
                         <li class="mb-2"><a href="#stats">Impact Stats</a></li>
                         <li class="mb-2"><a href="login.html" class="fw-bold text-white">Administrative Login</a></li>
@@ -407,7 +433,7 @@
             </div>
             <hr class="border-secondary">
             <div class="text-center text-muted small pt-2">
-                <p>&copy; 2026 EduPulse NGO Framework. Engineered for Content Management Oversight.</p>
+                <p>&copy; 2026 EduPulse NGO Framework. [span_7](start_span)Engineered for Content Management Oversight[span_7](end_span).</p>
             </div>
         </div>
     </footer>
