@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarePulse CMS - About Us Management Console</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #111111;
+            --primary-light: #ffffff;
+            --gray-border: #e2e8f0;
+            --gray-bg: #f8fafc;
+            --text-muted: #64748b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--primary-dark);
+            background-color: var(--primary-light);
+        }
+
+        /* High-Contrast Navigation Aesthetic Rules */
+        .navbar { border-bottom: 1px solid var(--gray-border); background-color: var(--primary-light); }
+        .navbar-brand { font-weight: 700; letter-spacing: 1px; color: var(--primary-dark) !important; }
+        .nav-link { color: var(--primary-dark) !important; font-weight: 500; }
+        
+        .section-padding { padding: 60px 0; }
+        .dashboard-card { border: 1px solid var(--gray-border); background: var(--primary-light); border-radius: 0; padding: 30px; margin-bottom: 30px; }
+        .admin-header { background: var(--primary-dark); color: var(--primary-light); padding: 40px 20px; border-radius: 0; margin-bottom: 40px; }
+        
+        /* Interactive Micro-transitions: Values Card Background Color Inversion */
+        .value-card {
+            border: 1px solid var(--gray-border); border-radius: 0; padding: 30px 20px;
+            background: var(--primary-light); transition: all 0.3s ease; height: 100%; text-align: center;
+        }
+        .value-card:hover {
+            background: var(--primary-dark); color: var(--primary-light); border-color: var(--primary-dark); transform: translateY(-3px);
+        }
+        .value-icon { font-size: 2rem; margin-bottom: 15px; color: var(--primary-dark); transition: color 0.3s ease; }
+        .value-card:hover .value-icon { color: var(--primary-light); }
+
+        /* Dynamic Program Index Left Indicator Bar */
+        .program-box { border-left: 3px solid var(--primary-dark); padding-left: 20px; margin-bottom: 25px; }
+
+        /* Interactive Micro-transitions: Grayscale portrait filter switches */
+        .team-card { border: 1px solid var(--gray-border); background: var(--primary-light); border-radius: 0; overflow: hidden; transition: all 0.3s ease; text-align: center; }
+        .team-card:hover { border-color: var(--primary-dark); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .team-img-wrapper { height: 250px; background: #111111; overflow: hidden; }
+        .team-card img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); transition: all 0.4s ease; }
+        .team-card:hover img { filter: grayscale(0%); transform: scale(1.02); }
+        .team-info { padding: 15px; border-top: 1px solid var(--gray-border); }
+        
+        /* Admin Interactive Framework Lists styling */
+        .entity-list-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--gray-border); padding: 12px 0; }
+        .form-control, .btn { border-radius: 0; }
+        .btn-dark { background: var(--primary-dark); border-color: var(--primary-dark); }
+        .btn-outline-danger { font-size: 0.8rem; padding: 4px 8px; border-radius: 0; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top py-3">
+        <div class="container">
+            <a class="navbar-brand" href="index.html"><i class="fa-solid fa-layer-group me-2"></i>CAREPULSE</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link px-3" href="index.html"><i class="fa-solid fa-house me-1"></i> Home</a>
+                <a class="nav-link px-3 fw-bold text-dark" href="#admin-console"><i class="fa-solid fa-sliders me-1"></i> Admin Console</a>
+                <a class="nav-link px-3" href="#live-preview"><i class="fa-solid fa-eye me-1"></i> Live View Preview</a>
+            </div>
+        </div>
+    </nav>
+
+    <main id="admin-console" class="container section-padding">
+        <div class="admin-header text-center">
+            <h1 class="display-6 fw-bold text-uppercase tracking-wide mb-2">About Us Content Dashboard</h1>
+            <p class="mb-0 text-uppercase small tracking-wider opacity-75">Full CRUD Engine Management Module</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="dashboard-card">
+                    <h3 class="h5 fw-bold text-uppercase mb-3"><i class="fa-solid fa-book-open me-2"></i>Our Story Section</h3>
+                    <form id="story-form">
+                        <div class="mb-3">
+                            <label class="small fw-bold text-uppercase text-muted mb-1">Story Content Narrative:</label>
+                            <textarea id="story-input" class="form-control" rows="4" required placeholder="Enter primary history timeline description data..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-dark btn-sm text-uppercase tracking-wider px-3">Update Story Record</button>
+                    </form>
+                </div>
+
+                <div class="dashboard-card">
+                    <h3 class="h5 fw-bold text-uppercase mb-3"><i class="fa-solid fa-gavel me-2"></i>Core Values System</h3>
+                    <div id="values-admin-list" class="mb-3"></div>
+                    <form id="value-form" class="input-group">
+                        <input type="text" id="value-input" class="form-control form-control-sm" placeholder="Add a new core value..." required>
+                        <button type="submit" class="btn btn-dark btn-sm text-uppercase px-3">Add Value</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="dashboard-card">
+                    <h3 class="h5 fw-bold text-uppercase mb-3"><i class="fa-solid fa-list-check me-2"></i>Healthcare Programs Focus</h3>
+                    <div id="programs-admin-list" class="mb-3"></div>
+                    <form id="program-form">
+                        <div class="mb-2">
+                            <input type="text" id="prog-name-input" class="form-control form-control-sm" placeholder="Program Name (e.g., Child Literacy Support)" required>
+                        </div>
+                        <div class="mb-2">
+                            <textarea id="prog-desc-input" class="form-control form-control-sm" rows="2" placeholder="Optional brief program metrics description details..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-dark btn-sm text-uppercase px-3">Add Program</button>
+                    </form>
+                </div>
+
+                <div class="dashboard-card">
+                    <h3 class="h5 fw-bold text-uppercase mb-3"><i class="fa-solid fa-users me-2"></i>Leadership & Team Roster</h3>
+                    <div id="team-admin-list" class="mb-3"></div>
+                    <form id="team-form">
+                        <div class="row g-2 mb-2">
+                            <div class="col-6"><input type="text" id="member-name-input" class="form-control form-control-sm" placeholder="Full Name" required></div>
+                            <div class="col-6"><input type="text" id="member-role-input" class="form-control form-control-sm" placeholder="Role (e.g., Founder)" required></div>
+                        </div>
+                        <div class="mb-2">
+                            <input type="url" id="member-img-input" class="form-control form-control-sm" placeholder="Optional Portrait Image URL asset path...">
+                        </div>
+                        <button type="submit" class="btn btn-dark btn-sm text-uppercase px-3">Add Team Member</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <section id="live-preview" class="bg-light border-top pt-5 pb-5">
+        <div class="container bg-white p-5 border shadow-sm rounded-0">
+            <span class="d-block text-center text-uppercase text-muted tracking-widest small mb-1">- Public Visitor View Preview -</span>
+            <h2 class="text-center fw-bold text-uppercase tracking-wide mb-5">ABOUT CAREPULSE NGO</h2>
+            
+            <div class="row g-4 mb-5 align-items-center">
+                <div class="col-md-3 border-end text-md-end text-start">
+                    <h3 class="h4 fw-bold text-uppercase tracking-wider m-0">Our Journey & Story</h3>
+                </div>
+                <div class="col-md-9">
+                    <p id="preview-story" class="lead text-secondary m-0">Connecting to dynamic data pipelines...</p>
+                </div>
+            </div>
+
+            <div class="mb-5">
+                <h4 class="h5 text-center text-uppercase fw-bold tracking-wider mb-4">Our Core Ethical Foundations</h4>
+                <div id="preview-values-row" class="row g-4 justify-content-center"></div>
+            </div>
+
+            <div class="row g-4 mb-5 border-top pt-5">
+                <div class="col-lg-4">
+                    <h4 class="h5 text-uppercase fw-bold tracking-wider mb-3">Key Focus Frameworks</h4>
+                    <p class="text-muted small">Real-time database configurations highlighting actively running infrastructure schemes.</p>
+                </div>
+                <div id="preview-programs-col" class="col-lg-8"></div>
+            </div>
+
+            <div class="border-top pt-5">
+                <h4 class="h5 text-center text-uppercase fw-bold tracking-wider mb-4">Dedicated Team Members</h4>
+                <div id="preview-team-row" class="row g-4 justify-content-center"></div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-dark text-white text-center py-4 small">
+        <div class="container">
+            <p class="mb-0 opacity-75">&copy; 2026 CarePulse Application. All rights reserved. Engineered via Decoupled Architecture.</p>
+        </div>
+    </footer>
+
+    <script>
+        // DEVELOPER ADVICE: Keep as localhost for testing. Swap with your hosted API Server address when running live.
+        const BACKEND_URL = 'http://localhost:5000'; 
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchStateContext();
+
+            // Intercept Story Submission
+            document.getElementById('story-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                await syncPost(`${BACKEND_URL}/api/about/story`, { content: document.getElementById('story-input').value });
+            });
+
+            // Intercept Core Value Submission
+            document.getElementById('value-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                await syncPost(`${BACKEND_URL}/api/about/values`, { value: document.getElementById('value-input').value });
+                document.getElementById('value-input').value = "";
+            });
+
+            // Intercept Focus Program Submission
+            document.getElementById('program-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                await syncPost(`${BACKEND_URL}/api/about/programs`, {
+                    name: document.getElementById('prog-name-input').value,
+                    description: document.getElementById('prog-desc-input').value
+                });
+                document.getElementById('prog-name-input').value = "";
+                document.getElementById('prog-desc-input').value = "";
+            });
+
+            // Intercept Profile Card Roster Submission
+            document.getElementById('team-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                await syncPost(`${BACKEND_URL}/api/about/team`, {
+                    name: document.getElementById('member-name-input').value,
+                    role: document.getElementById('member-role-input').value,
+                    image_url: document.getElementById('member-img-input').value
+                });
+                document.getElementById('member-name-input').value = "";
+                document.getElementById('member-role-input').value = "";
+                document.getElementById('member-img-input').value = "";
+            });
+        });
+
+        // Universal Network Submission Framework Handler
+        async function syncPost(targetUrl, payloadData) {
+            try {
+                const response = await fetch(targetUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payloadData)
+                });
+                if (response.ok) { fetchStateContext(); }
+            } catch (err) { console.error("Communication anomaly captured:", err); }
+        }
+
+        // Universal Element Removal Handler
+        async function deleteItem(targetUrl) {
+            if (confirm("Confirm database row record deletion parameter sequence?")) {
+                const response = await fetch(targetUrl, { method: 'DELETE' });
+                if (response.ok) { fetchStateContext(); }
+            }
+        }
+
+        // Asynchronous Context Pipeline Painter
+        async function fetchStateContext() {
+            try {
+                const stream = await fetch(`${BACKEND_URL}/api/about/context`);
+                const data = await stream.json();
+
+                // 1. Render History Story Modules
+                if (data.story) {
+                    document.getElementById('story-input').value = data.story.content;
+                    document.getElementById('preview-story').innerText = data.story.content;
+                }
+
+                // 2. Render Value Structures
+                const valAdmin = document.getElementById('values-admin-list');
+                const valView = document.getElementById('preview-values-row');
+                valAdmin.innerHTML = ""; valView.innerHTML = "";
+                
+                data.values.forEach(v => {
+                    valAdmin.innerHTML += `
+                        <div class="entity-list-item small">
+                            <span><strong>${v.value}</strong></span>
+                            <button onclick="deleteItem('${BACKEND_URL}/api/about/values/${v._id}')" class="btn btn-outline-danger py-1 px-2"><i class="fa-solid fa-trash"></i> Delete</button>
+                        </div>`;
+                    valView.innerHTML += `
+                        <div class="col-md-3">
+                            <div class="value-card">
+                                <div class="value-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                                <h5 class="fw-bold text-uppercase small m-0">${v.value}</h5>
+                            </div>
+                        </div>`;
+                });
+
+                // 3. Render Strategic Programs
+                const progAdmin = document.getElementById('programs-admin-list');
+                const progView = document.getElementById('preview-programs-col');
+                progAdmin.innerHTML = ""; progView.innerHTML = "";
+
+                data.programs.forEach(p => {
+                    progAdmin.innerHTML += `
+                        <div class="entity-list-item small">
+                            <span><strong>${p.name}</strong></span>
+                            <button onclick="deleteItem('${BACKEND_URL}/api/about/programs/${p._id}')" class="btn btn-outline-danger py-1 px-2"><i class="fa-solid fa-trash"></i> Delete</button>
+                        </div>`;
+                    progView.innerHTML += `
+                        <div class="program-box">
+                            <h5 class="fw-bold text-uppercase mb-1">${p.name}</h5>
+                            <p class="text-secondary small m-0">${p.description || "No description logged for this focus area."}</p>
+                        </div>`;
+                });
+
+                // 4. Render Team Personnel Roster
+                const teamAdmin = document.getElementById('team-admin-list');
+                const teamView = document.getElementById('preview-team-row');
+                teamAdmin.innerHTML = ""; teamView.innerHTML = "";
+
+                data.team.forEach(t => {
+                    const avatar = t.image_url || "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400";
+                    teamAdmin.innerHTML += `
+                        <div class="entity-list-item small">
+                            <span><strong>${t.name}</strong> (${t.role})</span>
+                            <button onclick="deleteItem('${BACKEND_URL}/api/about/team/${t._id}')" class="btn btn-outline-danger py-1 px-2"><i class="fa-solid fa-trash"></i> Delete</button>
+                        </div>`;
+                    teamView.innerHTML += `
+                        <div class="col-6 col-md-3">
+                            <div class="team-card">
+                                <div class="team-img-wrapper">
+                                    <img src="${avatar}" alt="Roster Matrix Portrait">
+                                </div>
+                                <div class="team-info">
+                                    <h6 class="fw-bold mb-0 text-uppercase small">${t.name}</h6>
+                                    <span class="text-muted d-block" style="font-size:0.75rem;">${t.role}</span>
+                                </div>
+                            </div>
+                        </div>`;
+                });
+
+            } catch (err) { console.error("Error connecting with the API database layer infrastructure:", err); }
+        }
+    </script>
+</body>
+</html>
