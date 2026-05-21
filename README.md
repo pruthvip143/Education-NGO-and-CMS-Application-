@@ -43,69 +43,74 @@ To run this project on your local machine, follow these simple steps:
 
 # EduPulse - Full-Stack NGO Content Management System (CMS)
 
-EduPulse is a full-stack web application designed to empower non-governmental organizations (NGOs) by providing absolute content management control over their institutional identity. This module focuses heavily on a dynamic, authenticated administrator workspace that controls the **About Us** portal without altering any layout or frontend source code.
+EduPulse is a full-stack, mobile-responsive content management web application engineered for non-governmental organizations to grant administrators dynamic, real-time control over their public institutional identity data. This application replaces static, manual edits with a dedicated management console dashboard to update content seamlessly without altering the core frontend layout code.
 
-## 🚀 Live Links
-* **Frontend UI (GitHub Pages):** [https://harshiharshitha2919-dot.github.io/healthcare-cms-project/](https://harshiharshitha2919-dot.github.io/healthcare-cms-project/)  
-* **Backend API Server:** `https://your-deployed-backend-link.onrender.com`
+## 🔗 Project Links
+* **Live Deployment Server (GitHub Pages):** https://pruthvip143.github.io/Education-NGO-and-CMS-Application-/
+* **Source Code Repository (GitHub):** https://github.com/pruthvip143/Education-NGO-and-CMS-Application-
+
+---
+
+## 📊 Database Architecture (MongoDB Schemas)
+To ensure all admin data updates remain permanently saved, the backend application engine communicates with a database layer composed of four independent tracking structures:
+
+### 1. Our Story (`our_story`)
+Stores the single-row master historical text narrative and background timeline milestones.
+* `id` (INT, Primary Key) - Unique sequence identifier key.
+* `story_content` (TEXT, NOT NULL) - The primary history description narrative text body.
+* `created_at` (DATE TIME) - Automatic initialization log timestamp.
+* `updated_at` (DATE TIME) - Automatic tracking timestamp of the last administrative modification save.
+
+### 2. Core Values (`core_values`)
+Stores individual organizational virtues or core ethical principles.
+* `id` (INT, Primary Key) - Unique row index identifier.
+* `title` (VARCHAR 100, NOT NULL) - Name of the foundational principle (e.g., Integrity, Inclusivity).
+* `description` (TEXT, NULLABLE) - Optional detailed background context summary.
+* `created_at` / `updated_at` (DATE TIME) - System operational logs.
+
+### 3. Programs (`programs`)
+Stores operational focus campaigns, community target initiatives, or action focuses.
+* `id` (INT, Primary Key) - Unique identity primary key sequence.
+* `program_name` (VARCHAR 150, NOT NULL) - Clear name header of the active campaign sector.
+* `description` (TEXT) - Context string detailing active agendas or milestones.
+* `created_at` / `updated_at` (DATE TIME) - Timestamps recording data creation and updates.
+
+### 4. Team Members (`team_members`)
+Maps and hosts profiles, assigned corporate titles, and photo paths of the executive leadership panel.
+* `id` (INT, Primary Key) - Unique employee sequence registry primary key.
+* `name` (VARCHAR 255, NOT NULL) - Full legal name of the registered team executive.
+* `role` (VARCHAR 255, NOT NULL) - Assigned corporate title or designation (e.g., Program Director).
+* `image_url` (VARCHAR 255, NULLABLE) - Complete directory string path pointer leading to the photo asset.
+* `created_at` / `updated_at` (DATE TIME) - Real-time structural tracking logs.
+
+---
+
+## 🌟 Key Features Developed
+
+### 1. Administrative Content Management Panel (`about.html`)
+* **Dynamic Story Customization:** A secure input area featuring a text area component allowing authorized administrators to instantly update the primary background narrative text permanently in the database.
+* **Core Values Grid System:** An editable matrix view enabling administrators to introduce new corporate values into the grid on the fly, paired with active inline control buttons to handle instant row deletions.
+* **Focus Campaign Controls:** Explicit campaign form entry components to add or clear active focal programs dynamically.
+* **Workforce Registry Table:** Structured data forms to track team members by full name, title role, and profile photograph paths, supported by a real-time table tracking grid container with built-in Edit and Delete mechanisms.
+
+### 2. Public Visitor View Canvas (`index.html`)
+* **Warm Introduction UI:** Displays a prominent welcoming interface emphasizing the organization's identity, core mission, and achievement metrics.
+* **Dynamic Content Syncing:** Automatically pulls and visualizes data saved from the admin panel (Story, Values, Programs, and Team profiles) instantly onto the web page using seamless AJAX Fetch APIs.
 
 ---
 
 ## 🛠️ Technology Stack
-* **Frontend:** HTML5, CSS3 (Custom Black & White Theme), Bootstrap 5, FontAwesome, JavaScript (AJAX / Fetch API)
-* **Backend:** Node.js, Express.js
-* **Database:** MongoDB (using Mongoose schemas)
-* **Hosting:** GitHub Pages (Static Frontend) & Render/Railway (Dynamic Backend API)
+* **Frontend UI Canvas:** HTML5, CSS3, JavaScript (ES6 Fetch API Interface Engines), Bootstrap 5, FontAwesome Vectors
+* **Backend Runtime Middleware:** Node.js, Express.js Engine
+* **Database Infrastructure Layer:** MongoDB (Mongoose Document Mapping)
 
 ---
 
-## 💾 Relational Database Schema Design
-To ensure all user inputs and management parameters save permanently, the system engine communicates directly with a MongoDB cluster utilizing four core tracking collections:
+## 🚀 Local Installation & Run Guide
 
-### 1. Our Story (`our_story`)
-Stores the master historical narrative block displayed on the public interface.
-* `_id`: ObjectUnique Key Identifier
-* `story_content`: String (TEXT, NOT NULL)
-* `created_at` / `updated_at`: Automated system timestamps
+To boot up and run this project on your local machine, execute these steps:
 
-### 2. Core Values (`core_values`)
-Maintains individual corporate principles or ethical boundaries.
-* `_id`: Unique Key Identifier
-* `title`: String (NOT NULL)
-* `description`: String (Nullable)
-
-### 3. Programs (`programs`)
-Tracks active community focus initiatives and rural campaigns.
-* `_id`: Unique Key Identifier
-* `program_name`: String (NOT NULL)
-* `description`: String
-
-### 4. Team Members (`team_members`)
-Manages the leadership board registry metadata.
-* `_id`: Unique Key Identifier
-* `name`: String (Full Name, NOT NULL)
-* `role`: String (Designation, NOT NULL)
-* `image_url`: String (Photo path pointer)
-
----
-
-## 💻 Key Features Developed
-
-### Administrative Content Workspace Console (`about.html`)
-* **Dynamic Story Customization:** Built an inline text input form backed by an asynchronous payload router to modify history instantly.
-* **Core Values Grid System:** Enabled real-time creation and removal parameters of core values that lock straight into permanent storage.
-* **Campaign & Focus Allocations:** Provides explicit input boxes to append upcoming programs seamlessly.
-* **Workforce Registry Grid:** Features direct text and image link binding mechanics, matching full validation conditions with explicit "Delete" utility control tools.
-
-### Public Landing UI Canvas (`index.html`)
-* Fully mobile-responsive layouts that completely display updated database components.
-* Fixed mobile dropdown menus (`#navbarNav`) to link natively with the Admin console seamlessly.
-
----
-
-## 🔧 How To Run Locally
-
-1. **Clone the repository:**
+1. **Clone the Project Repository:**
    ```bash
-   git clone [https://github.com/harshiharshitha2919-dot/healthcare-cms-project.git](https://github.com/harshiharshitha2919-dot/healthcare-cms-project.git)
-   cd healthcare-cms-project
+   git clone [https://github.com/pruthvip143/Education-NGO-and-CMS-Application-.git](https://github.com/pruthvip143/Education-NGO-and-CMS-Application-.git)
+   cd Education-NGO-and-CMS-Application-
